@@ -63,7 +63,7 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(453, 149);
             this.dataGridView2.TabIndex = 1;
-            
+            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             // 
             // button1
             // 
@@ -73,6 +73,7 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "btnAdd";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // button2
             // 
@@ -82,7 +83,7 @@
             this.button2.TabIndex = 3;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
-            
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 

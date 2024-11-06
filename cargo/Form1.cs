@@ -22,7 +22,7 @@ namespace cargo
             InitializeComponent();
             this.AcceptButton = button1;
 
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=бавза;Integrated Security=True";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             if (connection.State == System.Data.ConnectionState.Open)

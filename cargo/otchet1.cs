@@ -20,7 +20,7 @@ namespace cargo
 
         private void LoadData()
         {
-            string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на свои данные
+            string connectionString = "Data Source = (localdb)\\mssqllocaldb; Initial Catalog = бавза; Integrated Security = False; Encrypt = False; "; // Замените на свои данные
             string query = @"SELECT 
     k.name AS CategoryName,
     dt.name_2 AS ProductName,
@@ -66,7 +66,7 @@ ORDER BY
 
         private void LoadTotalStockValue()
         {
-            string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на свои данные
+            string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=бавза;Integrated Security=False;Encrypt=False;"; // Замените на свои данные
             string query = @"SELECT 
     ISNULL(SUM(CASE 
                    WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost 
@@ -107,6 +107,49 @@ LEFT JOIN
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog.Title = "Сохранить как";
+            saveFileDialog.FileName = "Отчет.csv";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter(saveFileDialog.FileName))
+                    {
+                        // Записываем заголовки столбцов
+                        for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                        {
+                            sw.Write(dataGridView1.Columns[i].HeaderText);
+                            if (i < dataGridView1.Columns.Count - 1)
+                                sw.Write(",");
+                        }
+                        sw.WriteLine();
+
+                        // Записываем данные строк
+                        foreach (DataGridViewRow row in dataGridView1.Rows)
+                        {
+                            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                            {
+                                sw.Write(row.Cells[i].Value?.ToString());
+                                if (i < dataGridView1.Columns.Count - 1)
+                                    sw.Write(",");
+                            }
+                            sw.WriteLine();
+                        }
+                    }
+                    MessageBox.Show("Данные успешно экспортированы.", "Успех");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка при экспорте данных: " + ex.Message, "Ошибка");
+                }
+            }
         }
     }
 }

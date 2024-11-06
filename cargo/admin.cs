@@ -13,7 +13,7 @@ namespace cargo
 {
     public partial class admin : Form
     {
-        string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+        string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=бавза;Integrated Security=False;Encrypt=False;";
         private SqlDataAdapter _adapter;
         private DataSet _dataSet;
 
@@ -26,13 +26,13 @@ namespace cargo
 
         private void LoadData()
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
+                SqlConnection connection = new SqlConnection(connectionString);
+            
                 _adapter = new SqlDataAdapter("SELECT * FROM zakaz", connection);
                 _dataSet = new DataSet();
                 _adapter.Fill(_dataSet);
                 dataGridView2.DataSource = _dataSet.Tables[0];
-            }
+            connection.Open();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -103,10 +103,48 @@ namespace cargo
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string selectQuery = "SELECT * FROM zakaz;";
-            _adapter = new SqlDataAdapter(selectQuery, @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False");
-            _adapter.Fill(_dataSet, "prodANDcoaf");
-            dataGridView1.DataSource = _dataSet.Tables["zakaz"];
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                int rowIndex = dataGridView2.SelectedRows[0].Index;
+
+                // Проверяем, что все поля заполнены
+                if (string.IsNullOrEmpty(txtIdZak.Text) ||
+                    string.IsNullOrEmpty(txtCol.Text) || string.IsNullOrEmpty(txtCost.Text) ||
+                    string.IsNullOrEmpty(txtDropId.Text) || string.IsNullOrEmpty(txtSborId.Text) ||
+                    string.IsNullOrEmpty(txtDate.Text))
+                {
+                    MessageBox.Show("Заполните все поля.", "Ошибка");
+                    return;
+                }
+
+                DateTime parsedDate;
+                if (!DateTime.TryParse(txtDate.Text, out parsedDate))
+                {
+                    MessageBox.Show("Введите корректную дату.", "Ошибка");
+                    return;
+                }
+
+                // Обновляем данные в выбранной строке
+                DataRow row = _dataSet.Tables[0].Rows[rowIndex];
+                row["date"] = parsedDate;
+                row["id_zak"] = int.Parse(txtIdZak.Text);
+                row["drop_id"] = int.Parse(txtDropId.Text);
+                row["col"] = int.Parse(txtCol.Text);
+                row["cost"] = decimal.Parse(txtCost.Text);
+                row["sbor_id"] = int.Parse(txtSborId.Text);
+
+                // Сохраняем изменения в базе данных
+                SaveChanges();
+
+                // Обновляем DataGridView после сохранения
+                LoadData();
+
+                MessageBox.Show("Данные успешно обновлены.", "Успех");
+            }
+            else
+            {
+                MessageBox.Show("Выберите строку для редактирования.", "Ошибка");
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -126,23 +164,23 @@ namespace cargo
 
         private void SaveChanges()
         {
-            try
-            {
-                if (_adapter == null || _dataSet == null)
-                {
-                    MessageBox.Show("Ошибка: адаптер или набор данных не инициализированы.", "Ошибка");
-                    return;
-                }
+            //try
+            //{
+            //    if (_adapter == null || _dataSet == null)
+            //    {
+            //        MessageBox.Show("Ошибка: адаптер или набор данных не инициализированы.", "Ошибка");
+            //        return;
+            //    }
 
                 SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(_adapter);
                 // Обновляем только таблицу "zakaz" в DataSet
-                _adapter.Update(_dataSet.Tables[0]);
-                MessageBox.Show("Изменения успешно сохранены.", "Успех");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка");
-            }
+                _adapter.Update(_dataSet);
+            //    MessageBox.Show("Изменения успешно сохранены.", "Успех");
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка");
+            //}
         }
 
 
