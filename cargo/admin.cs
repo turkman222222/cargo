@@ -13,7 +13,7 @@ namespace cargo
 {
     public partial class admin : Form
     {
-        string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=бавза;Integrated Security=False;Encrypt=False;";
+        string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;";
         private SqlDataAdapter _adapter;
         private DataSet _dataSet;
 
@@ -26,15 +26,26 @@ namespace cargo
 
         private void LoadData()
         {
-                SqlConnection connection = new SqlConnection(connectionString);
-            
-                _adapter = new SqlDataAdapter("SELECT zakaz.*, zakazchik.name, kat.name, sbor.name_3 FROM zakaz INNER JOIN zakazchik on (zakaz.id_zak = zakazchik.id) INNER JOIN kat ON (zakaz.drop_id = kat.id) inner join sbor on(zakaz.sbor_id = sbor.id); ", connection);
-                _dataSet = new DataSet();
-                _adapter.Fill(_dataSet);
-                dataGridView2.DataSource = _dataSet.Tables[0];
+            SqlConnection connection = new SqlConnection(connectionString);
+
+            _adapter = new SqlDataAdapter("SELECT zakaz.*, zakazchik.name AS ZakazchikName, kat.name AS KatName, sbor.name_3 AS SborName FROM zakaz INNER JOIN zakazchik on (zakaz.id_zak = zakazchik.id) INNER JOIN kat ON (zakaz.drop_id = kat.id) INNER JOIN sbor on(zakaz.sbor_id = sbor.id);", connection);
+            _dataSet = new DataSet();
+            _adapter.Fill(_dataSet);
+            dataGridView2.DataSource = _dataSet.Tables[0];
+
+            // Скрываем ненужные колонки
             dataGridView2.Columns["id_zak"].Visible = false;
             dataGridView2.Columns["sbor_id"].Visible = false;
             dataGridView2.Columns["drop_id"].Visible = false;
+            // Устанавливаем заголовки колонок на русском языке
+            dataGridView2.Columns["id_zakaza"].HeaderText = "ID Заказа";
+            dataGridView2.Columns["drop_id"]. HeaderText = "товар";
+            dataGridView2.Columns["cost"].HeaderText = "цена";
+            dataGridView2.Columns["date"].HeaderText = "Дата";
+            dataGridView2.Columns["ZakazchikName"].HeaderText = "Заказчик";
+            dataGridView2.Columns["KatName"].HeaderText = "Категория";
+            dataGridView2.Columns["SborName"].HeaderText = "Сборщик";
+            dataGridView2.Columns["col"].HeaderText = "Количество";
 
             connection.Open();
         }
@@ -195,7 +206,7 @@ namespace cargo
             if (e.RowIndex >= 0)
             {
                 // Заполните поля формы данными из выбранной строки
-                txtIdZakaza.Text = dataGridView2.Rows[e.RowIndex].Cells["id_zakaza"].Value.ToString();
+               
                 txtDate.Text = dataGridView2.Rows[e.RowIndex].Cells["date"].Value.ToString();
                 txtIdZak.Text = dataGridView2.Rows[e.RowIndex].Cells["id_zak"].Value.ToString();
                 txtDropId.Text = dataGridView2.Rows[e.RowIndex].Cells["drop_id"].Value.ToString();
@@ -203,6 +214,11 @@ namespace cargo
                 txtCost.Text = dataGridView2.Rows[e.RowIndex].Cells["cost"].Value.ToString();
                 txtSborId.Text = dataGridView2.Rows[e.RowIndex].Cells["sbor_id"].Value.ToString();
             }
+        }
+
+        private void admin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
