@@ -28,10 +28,14 @@ namespace cargo
         {
                 SqlConnection connection = new SqlConnection(connectionString);
             
-                _adapter = new SqlDataAdapter("SELECT * FROM zakaz", connection);
+                _adapter = new SqlDataAdapter("SELECT zakaz.*, zakazchik.name, kat.name, sbor.name_3 FROM zakaz INNER JOIN zakazchik on (zakaz.id_zak = zakazchik.id) INNER JOIN kat ON (zakaz.drop_id = kat.id) inner join sbor on(zakaz.sbor_id = sbor.id); ", connection);
                 _dataSet = new DataSet();
                 _adapter.Fill(_dataSet);
                 dataGridView2.DataSource = _dataSet.Tables[0];
+            dataGridView2.Columns["id_zak"].Visible = false;
+            dataGridView2.Columns["sbor_id"].Visible = false;
+            dataGridView2.Columns["drop_id"].Visible = false;
+
             connection.Open();
         }
 
@@ -164,23 +168,23 @@ namespace cargo
 
         private void SaveChanges()
         {
-            //try
-            //{
-            //    if (_adapter == null || _dataSet == null)
-            //    {
-            //        MessageBox.Show("Ошибка: адаптер или набор данных не инициализированы.", "Ошибка");
-            //        return;
-            //    }
+            try
+            {
+                if (_adapter == null || _dataSet == null)
+                {
+                    MessageBox.Show("Ошибка: адаптер или набор данных не инициализированы.", "Ошибка");
+                   return;
+              }
 
                 SqlCommandBuilder sqlCommandBuilder = new SqlCommandBuilder(_adapter);
                 // Обновляем только таблицу "zakaz" в DataSet
                 _adapter.Update(_dataSet);
-            //    MessageBox.Show("Изменения успешно сохранены.", "Успех");
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка");
-            //}
+             MessageBox.Show("Изменения успешно сохранены.", "Успех");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка при сохранении данных: " + ex.Message, "Ошибка");
+            }
         }
 
 
