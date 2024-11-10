@@ -16,7 +16,8 @@ namespace cargo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new sign_in());
+            Console.WriteLine("Press Enter to exit...");
+            Application.Run(new Form1());
         }
     }
 }

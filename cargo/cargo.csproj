@@ -108,6 +108,12 @@
     <Compile Include="MENU.Designer.cs">
       <DependentUpon>MENU.cs</DependentUpon>
     </Compile>
+    <Compile Include="MENU2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MENU2.Designer.cs">
+      <DependentUpon>MENU2.cs</DependentUpon>
+    </Compile>
     <Compile Include="otchet1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MENU.resx">
       <DependentUpon>MENU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MENU2.resx">
+      <DependentUpon>MENU2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="otchet1.resx">
       <DependentUpon>otchet1.cs</DependentUpon>

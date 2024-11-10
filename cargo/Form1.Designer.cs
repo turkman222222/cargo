@@ -1,6 +1,6 @@
 ﻿namespace cargo
 {
-    partial class sign_in
+    partial class Form1
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -113,7 +113,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "sign_in";
             this.Text = "sign_in";
-            this.Load += new System.EventHandler(this.sign_in_Load);
+            
             this.ResumeLayout(false);
             this.PerformLayout();
 
