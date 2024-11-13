@@ -19,14 +19,14 @@ namespace cargo
         // Метод для загрузки заказов пользователя
         private void LoadUserOrders()
         {
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=бавза;Integrated Security=True;Encrypt=False";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = "SELECT * FROM zakaz WHERE id_zak = @userId";
+                string query = $"SELECT zakaz.*, zakazchik.id_polz FROM zakaz, zakazchik WHERE zakazchik.id_polz = {userId}";
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
-                    adapter.SelectCommand.Parameters.AddWithValue("@userId", userId); // Используйте правильное имя параметра
+                    //adapter.SelectCommand.Parameters.AddWithValue("@userId", userId); // Используйте правильное имя параметра
                     DataTable ordersTable = new DataTable();
                     adapter.Fill(ordersTable);
                     dataGridView1.DataSource = ordersTable;

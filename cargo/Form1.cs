@@ -15,7 +15,7 @@ namespace cargo
 
         private SqlConnection GetSqlConnection()
         {
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=бавза;Integrated Security=True;Encrypt=False";
             SqlConnection connection = new SqlConnection(connectionString);
             return connection;
         }
@@ -66,6 +66,11 @@ namespace cargo
             }
 
             MessageBox.Show("Неверный логин или пароль.");
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -25,7 +25,7 @@ namespace cargo
         }
         private void LoadData()
         {
-            string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;"; // Замените на свои данные
+            string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=бавза;Integrated Security=True;Encrypt=False"; // Замените на свои данные
             string query = @"
                 WITH SalesData AS (
                     SELECT 
