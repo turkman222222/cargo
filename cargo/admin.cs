@@ -207,6 +207,11 @@ namespace cargo
         {
             // Здесь можно выполнить дополнительные действия при загрузке формы
         }
+
+        private void txtSborId_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

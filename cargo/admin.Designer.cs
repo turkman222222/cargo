@@ -85,7 +85,6 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "Удалить";
             this.button3.UseVisualStyleBackColor = true;
-            
             // 
             // txtDate
             // 
@@ -128,6 +127,7 @@
             this.txtSborId.Name = "txtSborId";
             this.txtSborId.Size = new System.Drawing.Size(100, 20);
             this.txtSborId.TabIndex = 13;
+            this.txtSborId.TextChanged += new System.EventHandler(this.txtSborId_TextChanged);
             // 
             // label1
             // 
@@ -217,7 +217,6 @@
             this.Controls.Add(this.dataGridView2);
             this.Name = "admin";
             this.Text = "admin";
-            
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
