@@ -23,7 +23,7 @@ namespace cargo
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                string query = $"SELECT zakaz.*, zakazchik.id_polz FROM zakaz, zakazchik WHERE zakazchik.id_polz = {userId}";
+                string query = $"SELECT zakaz.*, zakazchik.name AS ZakazchikName, drop_table.name_2 AS drop_id2, sbor.name_3 AS SborName FROM zakaz INNER JOIN zakazchik ON (zakaz.id_zak = zakazchik.id) INNER JOIN drop_table ON (zakaz.drop_id = drop_table.id) INNER JOIN sbor ON (zakaz.sbor_id = sbor.id) WHERE zakazchik.id_polz = {userId};";
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
                     //adapter.SelectCommand.Parameters.AddWithValue("@userId", userId); // Используйте правильное имя параметра
