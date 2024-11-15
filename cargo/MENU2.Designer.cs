@@ -41,7 +41,6 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(510, 343);
             this.dataGridView1.TabIndex = 0;
-           
             // 
             // label1
             // 
@@ -55,6 +54,7 @@
             // 
             // button1
             // 
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.button1.Location = new System.Drawing.Point(573, 55);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(155, 23);
@@ -73,7 +73,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "MENU2";
-            this.Text = "MENU2";
+            this.Text = "личный кабинет";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

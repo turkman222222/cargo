@@ -44,11 +44,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(84, 13);
+            this.button1.Location = new System.Drawing.Point(12, 415);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(103, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
+            this.button1.Text = "Экспортировать";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -60,7 +60,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "otchet2";
-            this.Text = "otchet2";
+            this.Text = "Отчет2";
             this.Load += new System.EventHandler(this.otchet2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
