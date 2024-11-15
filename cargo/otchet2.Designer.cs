@@ -61,6 +61,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "otchet2";
             this.Text = "otchet2";
+            this.Load += new System.EventHandler(this.otchet2_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

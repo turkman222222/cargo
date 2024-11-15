@@ -171,5 +171,10 @@ namespace cargo
                 }
             }
         }
+
+        private void otchet2_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

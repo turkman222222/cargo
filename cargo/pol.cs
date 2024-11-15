@@ -232,5 +232,10 @@ namespace cargo
                 textBox5.Text = dataGridView1.SelectedRows[0].Cells["mail"].Value.ToString();
             }
         }
+
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
