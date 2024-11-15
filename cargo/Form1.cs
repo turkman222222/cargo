@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace cargo
 {
-    public partial class Form1: Form
+    public partial class Form1 : Form
     {
         public Form1()
         {
@@ -44,14 +44,14 @@ namespace cargo
                                 {
                                     MENU g = new MENU();
                                     g.Show();
-                                    
+
                                     return;
                                 }
                                 if (roleId == 1)
                                 {
                                     MENU2 jj = new MENU2(userId);
                                     jj.Show();
-                                    
+
                                     return;
                                 }
                             }
@@ -68,11 +68,13 @@ namespace cargo
             MessageBox.Show("Неверный логин или пароль.");
         }
 
+
         private void button2_Click(object sender, EventArgs e)
         {
             reg jj = new reg();
             jj.Show();
 
+           
         }
     }
 }

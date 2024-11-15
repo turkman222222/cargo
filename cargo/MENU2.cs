@@ -19,7 +19,7 @@ namespace cargo
         // Метод для загрузки заказов пользователя
         private void LoadUserOrders()
         {
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=бавза;Integrated Security=True;Encrypt=False";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
