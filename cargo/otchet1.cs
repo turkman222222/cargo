@@ -21,28 +21,20 @@ namespace cargo
         {
             string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;";
             string query = @"SELECT 
-                k.name AS CategoryName,
-                dt.name_2 AS ProductName,
-                ISNULL(SUM(CASE 
-                    WHEN wo.OperationType = 'Приход' THEN wo.Quantity 
-                    WHEN wo.OperationType = 'Отгрузка' THEN -wo.Quantity 
-                    ELSE 0 
-                END), 0) AS RemainingQuantity,
-                ISNULL(SUM(CASE 
-                    WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost 
-                    WHEN wo.OperationType = 'Отгрузка' THEN -wo.Quantity * dt.cost 
-                    ELSE 0 
-                END), 0) AS RemainingValue
-            FROM 
-                dbo.drop_table dt
-            JOIN 
-                dbo.kat k ON dt.catecoria = k.id
-            LEFT JOIN 
-                dbo.WarehouseOperations wo ON dt.id = wo.ProductID
-            GROUP BY 
-                k.name, dt.name_2
-            ORDER BY 
-                k.name, dt.name_2;";
+    k.name AS [Название категории],
+    dt.name_2 AS [Название товара],
+    ISNULL(SUM(CASE WHEN wo.OperationType = 'Приход' THEN wo.Quantity WHEN wo.OperationType = 'Отгрузка' THEN -wo.Quantity ELSE 0 END), 0) AS [Остаток товара],
+    ISNULL(SUM(CASE WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost ELSE -wo.Quantity * dt.cost END), 0) AS [Остаточная стоимость]
+FROM 
+    dbo.drop_table dt
+JOIN 
+    dbo.kat k ON dt.catecoria = k.id
+LEFT JOIN 
+    dbo.WarehouseOperations wo ON dt.id = wo.ProductID
+GROUP BY 
+    k.name, dt.name_2
+ORDER BY 
+    k.name, dt.name_2;;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(query, connection);
@@ -64,33 +56,44 @@ namespace cargo
         {
             string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;";
             string query = @"SELECT 
-                ISNULL(SUM(CASE 
-                    WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost 
-                    WHEN wo.OperationType = 'Отгрузка' THEN -wo.Quantity * dt.cost 
-                    ELSE 0 
-                END), 0) AS TotalStockValue
-            FROM 
-                dbo.drop_table dt
-            LEFT JOIN 
-                dbo.WarehouseOperations wo ON dt.id = wo.ProductID;";
+        ISNULL(SUM(CASE WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost ELSE -wo.Quantity * dt.cost END), 0) AS [Общая_стоимость_товаров]
+    FROM 
+        dbo.drop_table dt
+    LEFT JOIN 
+        dbo.WarehouseOperations wo ON dt.id = wo.ProductID;";
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                SqlCommand command = new SqlCommand(query, connection);
                 try
                 {
                     connection.Open();
-                    var result = command.ExecuteScalar(); // Выполняем запрос и получаем одно значение
-                    if (result != null)
+                    using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        label1.Text = "Общая стоимость товаров: " + result.ToString();
+                        object result = command.ExecuteScalar();
+
+                        if (result != null && result != DBNull.Value)
+                        {
+                            decimal totalValue = Convert.ToDecimal(result);
+                            label1.Text = $"Общая стоимость товаров: {totalValue:C}";
+                        }
+                        else
+                        {
+                            label1.Text = "Общая стоимость товаров: 0";
+                        }
                     }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Ошибка SQL: {ex.Message}", "Ошибка");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Ошибка: " + ex.Message);
+                    MessageBox.Show($"Непредвиденная ошибка: {ex.Message}", "Ошибка");
                 }
             }
         }
+
+
         private void btnExport_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();

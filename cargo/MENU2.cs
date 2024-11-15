@@ -8,9 +8,6 @@ namespace cargo
     public partial class MENU2 : Form
     {
         private int userId; // Идентификатор текущего пользователя
-        string ConnectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;";
-        private SqlDataAdapter _adapter;
-        private DataSet _dataSet;
 
         public MENU2(int userId)
         {
@@ -22,42 +19,40 @@ namespace cargo
         // Метод для загрузки заказов пользователя
         private void LoadUserOrders()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-
-                // Запрос для получения заказов пользователя
-                string query = $"SELECT zakaz.*, zakazchik.id_polz, zakazchik.name AS ZakazchikName, sbor.name AS SborName, drop_table.name_2 AS drop_id2  FROM zakaz " +
-                               "JOIN zakazchik ON zakaz.id_zak = zakazchik.id_zak " +
-                               "JOIN sbor ON zakaz.sbor_id = sbor.id " +
-                               "JOIN drop_table ON zakaz.drop_id = drop_table.id " +
-                               $"WHERE zakazchik.id_polz = {userId}";
-
-                // Создаем адаптер данных
+                string query = $"SELECT zakaz.*, zakazchik.name AS ZakazchikName, drop_table.name_2 AS drop_id2, sbor.name_3 AS SborName FROM zakaz INNER JOIN zakazchik ON (zakaz.id_zak = zakazchik.id) INNER JOIN drop_table ON (zakaz.drop_id = drop_table.id) INNER JOIN sbor ON (zakaz.sbor_id = sbor.id) WHERE zakazchik.id_polz = {userId};";
                 using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
                 {
-                    // Заполняем DataTable данными
                     DataTable ordersTable = new DataTable();
                     adapter.Fill(ordersTable);
-
-                    // Настройка DataGridView
-                    dataGridView1.DataSource = ordersTable; // Устанавливаем источник данных для DataGridView
+                    dataGridView1.DataSource = ordersTable;
                     dataGridView1.Columns["id_zak"].Visible = false;
                     dataGridView1.Columns["sbor_id"].Visible = false;
                     dataGridView1.Columns["drop_id"].Visible = false;
-
+                    dataGridView1.Columns["SborName"].Visible = false;
+                    dataGridView1.Columns["id_zakaza"].Visible = false;
                     // Устанавливаем заголовки колонок на русском языке
                     dataGridView1.Columns["id_zakaza"].HeaderText = "ID заказа";
                     dataGridView1.Columns["drop_id2"].HeaderText = "Товар";
                     dataGridView1.Columns["cost"].HeaderText = "Цена";
                     dataGridView1.Columns["date"].HeaderText = "Дата";
                     dataGridView1.Columns["ZakazchikName"].HeaderText = "Заказчик";
+
                     dataGridView1.Columns["SborName"].HeaderText = "Сборщик";
                     dataGridView1.Columns["col"].HeaderText = "Количество";
                 }
             }
         }
 
-        // ... (Остальной код формы)
+     
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            sd_zakaz orderForm = new sd_zakaz(userId); // Передаем userId в конструктор
+            orderForm.Show();
+        }
     }
 }

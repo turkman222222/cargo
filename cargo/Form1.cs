@@ -67,5 +67,12 @@ namespace cargo
 
             MessageBox.Show("Неверный логин или пароль.");
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            reg jj = new reg();
+            jj.Show();
+
+        }
     }
 }

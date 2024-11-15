@@ -49,5 +49,10 @@ namespace cargo
             admin p = new admin();
             p.Show();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

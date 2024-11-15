@@ -45,120 +45,8 @@ namespace cargo
                 MessageBox.Show("Ошибка при загрузке данных: " + ex.Message, "Ошибка");
             }
         }
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            // Проверка заполненности полей
-            if (string.IsNullOrEmpty(txtIdZak.Text) || string.IsNullOrEmpty(txtCol.Text) || string.IsNullOrEmpty(txtCost.Text) || string.IsNullOrEmpty(txtDropId.Text) || string.IsNullOrEmpty(txtSborId.Text) || string.IsNullOrEmpty(txtDate.Text))
-            {
-                MessageBox.Show("Заполните все поля", "Ошибка");
-                return;
-            }
-            // Проверка формата даты
-            DateTime parsedDate;
-            if (!DateTime.TryParseExact(txtDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-            {
-                MessageBox.Show("Введите корректную дату в формате ДД.ММ.ГГГГ.", "Ошибка");
-                return;
-            }
-            try
-            {
-                // Получаем максимальный id_zakaza из таблицы zakaz
-                int maxIdZakaza = 0;
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT MAX(id_zakaza) FROM zakaz", connection);
-                    object result = command.ExecuteScalar();
-                    if (result != DBNull.Value)
-                    {
-                        maxIdZakaza = Convert.ToInt32(result);
-                    }
-                }
-                // Увеличиваем максимальный ID на 1
-                int newIdZakaza = maxIdZakaza + 1;
-                // Вставляем новую строку в таблицу zakaz
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("INSERT INTO zakaz (id_zakaza, date, id_zak, drop_id, col, cost, sbor_id) VALUES (@id_zakaza, @date, @id_zak, @drop_id, @col, @cost, @sbor_id);", connection);
-                    command.Parameters.AddWithValue("@id_zakaza", newIdZakaza);
-                    command.Parameters.AddWithValue("@date", parsedDate);
-                    // Используем TryParse для проверки ввода
-                    int idZak, dropId, col, sborId;
-                    decimal cost;
-                    if (!int.TryParse(txtIdZak.Text, out idZak) ||
-                        !int.TryParse(txtDropId.Text, out dropId) ||
-                        !int.TryParse(txtCol.Text, out col) ||
-                        !decimal.TryParse(txtCost.Text, out cost) ||
-                        !int.TryParse(txtSborId.Text, out sborId))
-                    {
-                        MessageBox.Show("Проверьте корректность введённых данных.", "Ошибка");
-                        return;
-                    }
-                    command.Parameters.AddWithValue("@id_zak", idZak);
-                    command.Parameters.AddWithValue("@drop_id", dropId);
-                    command.Parameters.AddWithValue("@col", col);
-                    command.Parameters.AddWithValue("@cost", cost);
-                    command.Parameters.AddWithValue("@sbor_id", sborId);
-                    // Выполнение запроса
-                    command.ExecuteNonQuery();
-                }
-                // Обновляем DataSet и DataGridView
-                loadData();
-                MessageBox.Show("Данные успешно добавлены.", "Успех");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Произошла ошибка: " + ex.Message, "Ошибка");
-            }
-        }
-        private void button2_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.SelectedRows.Count > 0)
-            {
-                int rowIndex = dataGridView2.SelectedRows[0].Index;
-                // Проверяем, что все поля заполнены
-                if (string.IsNullOrEmpty(txtIdZak.Text) || string.IsNullOrEmpty(txtCol.Text) || string.IsNullOrEmpty(txtCost.Text) || string.IsNullOrEmpty(txtDropId.Text) || string.IsNullOrEmpty(txtSborId.Text) || string.IsNullOrEmpty(txtDate.Text))
-                {
-                    MessageBox.Show("Заполните все поля.", "Ошибка");
-                    return;
-                }
-                DateTime parsedDate;
-                if (!DateTime.TryParseExact(txtDate.Text, "dd.MM.yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out parsedDate))
-                {
-                    MessageBox.Show("Введите корректную дату.", "Ошибка");
-                    return;
-                }
-                // Обновляем данные в выбранной строке
-                DataRow row = _dataSet.Tables[0].Rows[rowIndex];
-                row["date"] = parsedDate;
-                int idZak, dropId, col, sborId;
-                decimal cost;
-                if (!int.TryParse(txtIdZak.Text, out idZak) ||
-                    !int.TryParse(txtDropId.Text, out dropId) ||
-                    !int.TryParse(txtCol.Text, out col) ||
-                    !decimal.TryParse(txtCost.Text, out cost) ||
-                    !int.TryParse(txtSborId.Text, out sborId))
-                {
-                    MessageBox.Show("Проверьте корректность введённых данных.", "Ошибка");
-                    return;
-                }
-                row["id_zak"] = idZak;
-                row["drop_id"] = dropId;
-                row["col"] = col;
-                row["cost"] = cost;
-                row["sbor_id"] = sborId;
-                // Сохраняем изменения в базе данных
-                SaveChanges();
-                // Обновляем DataGridView после сохранения
-                loadData();
-                MessageBox.Show("Данные успешно обновлены.", "Успех");
-            }
-            else
-            {
-                MessageBox.Show("Выберите строку для редактирования.", "Ошибка");
-            }
-        }
+       
+      
         private void button3_Click(object sender, EventArgs e)
         {
             if (dataGridView2.SelectedRows.Count > 0)
@@ -192,16 +80,7 @@ namespace cargo
         }
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
-            {
-                // Заполняем поля формы данными из выбранной строки
-                txtDate.Text = dataGridView2.Rows[e.RowIndex].Cells["date"].Value.ToString();
-                txtIdZak.Text = dataGridView2.Rows[e.RowIndex].Cells["id_zak"].Value.ToString();
-                txtDropId.Text = dataGridView2.Rows[e.RowIndex].Cells["drop_id"].Value.ToString();
-                txtCol.Text = dataGridView2.Rows[e.RowIndex].Cells["col"].Value.ToString();
-                txtCost.Text = dataGridView2.Rows[e.RowIndex].Cells["cost"].Value.ToString();
-                txtSborId.Text = dataGridView2.Rows[e.RowIndex].Cells["sbor_id"].Value.ToString();
-            }
+            
         }
         private void admin_Load(object sender, EventArgs e)
         {
@@ -211,6 +90,36 @@ namespace cargo
         private void txtSborId_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+           category kk = new category();
+            kk.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            drop gg = new drop();
+            gg.Show();
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            ed_izm hh = new ed_izm();
+            hh.Show();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            post post = new post();
+            post.Show();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            pol pol = new pol();
+            pol.Show();
         }
     }
 }
