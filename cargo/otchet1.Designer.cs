@@ -77,7 +77,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dataGridView1);
             this.Name = "otchet1";
-            this.Text = "otchet1";
+            this.Text = "Отчет1";
             this.Load += new System.EventHandler(this.otchet1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

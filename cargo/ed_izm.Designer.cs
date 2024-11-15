@@ -43,7 +43,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 0;
-            
             // 
             // dataGridView1
             // 
@@ -65,7 +64,7 @@
             // 
             // add
             // 
-            this.add.Location = new System.Drawing.Point(177, 256);
+            this.add.Location = new System.Drawing.Point(212, 256);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(75, 23);
             this.add.TabIndex = 9;
@@ -75,7 +74,7 @@
             // 
             // delete
             // 
-            this.delete.Location = new System.Drawing.Point(93, 256);
+            this.delete.Location = new System.Drawing.Point(117, 256);
             this.delete.Name = "delete";
             this.delete.Size = new System.Drawing.Size(75, 23);
             this.delete.TabIndex = 8;
@@ -87,7 +86,7 @@
             // 
             this.edit.Location = new System.Drawing.Point(12, 256);
             this.edit.Name = "edit";
-            this.edit.Size = new System.Drawing.Size(75, 23);
+            this.edit.Size = new System.Drawing.Size(99, 23);
             this.edit.TabIndex = 7;
             this.edit.Text = "редактировать";
             this.edit.UseVisualStyleBackColor = true;
@@ -105,7 +104,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.textBox1);
             this.Name = "ed_izm";
-            this.Text = "ed_izm";
+            this.Text = "единицы измерения";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
