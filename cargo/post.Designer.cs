@@ -165,6 +165,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "post";
             this.Text = "Поставщики";
+            this.Load += new System.EventHandler(this.post_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class post : Form
     {
-        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
 
         public post()
         {
@@ -201,6 +201,11 @@ namespace cargo
                 textBox3.Text = dataGridView1.SelectedRows[0].Cells["phone_number"].Value.ToString();
                 textBox4.Text = dataGridView1.SelectedRows[0].Cells["email"].Value.ToString();
             }
+        }
+
+        private void post_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

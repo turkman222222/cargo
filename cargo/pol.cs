@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class pol : Form
     {
-        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
 
         public pol()
         {
@@ -20,7 +20,9 @@ namespace cargo
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT \r\n    p.id_polzov, \r\n    p.name, \r\n    p.log, \r\n    p.password, \r\n    p.mail,\r\n    r.name AS rol_id  -- Get the role name from the ROL table\r\nFROM \r\n    dbo.polzov p  -- Alias 'p' for brevity\r\nINNER JOIN \r\n    dbo.ROL r ON p.rol_id = rol_id;";
+                string query = "SELECT p.id_polzov, p.name, p.log, p.password, p.mail, r.name AS rol_id " +
+                               "FROM dbo.polzov p " +
+                               "INNER JOIN dbo.ROL r ON p.rol_id = r.id;"; // Исправлено на r.id
 
                 try
                 {
@@ -243,10 +245,9 @@ namespace cargo
             }
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        private void pol_Load(object sender, EventArgs e)
         {
-
+            // Здесь можно добавить код, который нужно выполнить при загрузке формы
         }
     }
 }
-

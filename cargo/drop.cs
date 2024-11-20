@@ -8,7 +8,7 @@ namespace cargo
 {
     public partial class drop : Form
     {
-        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
+        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
 
         public drop()
         {
@@ -21,15 +21,22 @@ namespace cargo
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = @"
-                    SELECT 
-                        dt.id,
-                        dt.catecoria AS [Категория],
-                        dt.name_2 AS [Название],
-                        dt.ed_izm AS [Ед. измерения],
-                        dt.col_sk AS [Кол-во на складе],
-                        dt.cost AS [Цена],
-                        dt.post_id AS [Поставщик]
-                    FROM dbo.drop_table dt";
+            SELECT 
+                dt.id, 
+                k.name AS Category, 
+                dt.name_2 AS Название, 
+                ei.ed_iz AS Unit, 
+                dt.col_sk AS [Кол-во на складе], 
+                dt.cost AS Цена, 
+                p.name AS Post 
+            FROM 
+                drop_table dt 
+            JOIN 
+                kat k ON dt.catecoria = k.id 
+            JOIN 
+                ed_iz ei ON dt.ed_izm = ei.id 
+            JOIN 
+                post p ON dt.post_id = p.id";
 
                 try
                 {
@@ -40,14 +47,15 @@ namespace cargo
                         adapter.Fill(dt);
                         dataGridView1.DataSource = dt;
 
-                        // Установка заголовков столбцов
+                        // Установка заголовков столбцов (ИСПОЛЬЗУЕМ АЛИАСЫ ИЗ ЗАПРОСА)
                         dataGridView1.Columns["id"].HeaderText = "ID";
                         dataGridView1.Columns["Название"].HeaderText = "Название";
-                        dataGridView1.Columns["Ед. измерения"].HeaderText = "Ед. измерения";
+                        dataGridView1.Columns["Unit"].HeaderText = "Ед. измерения";
                         dataGridView1.Columns["Кол-во на складе"].HeaderText = "Кол-во на складе";
                         dataGridView1.Columns["Цена"].HeaderText = "Цена";
-                        dataGridView1.Columns["Поставщик"].HeaderText = "Поставщик";
-                        dataGridView1.Columns["Категория"].HeaderText = "Категория";
+                        dataGridView1.Columns["Post"].HeaderText = "Поставщик";
+                        dataGridView1.Columns["Category"].HeaderText = "Категория";
+
 
                         // Сделать столбец 'id' только для чтения
                         dataGridView1.Columns["id"].ReadOnly = true;

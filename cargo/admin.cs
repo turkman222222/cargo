@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class admin : Form
     {
-        string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
+        string ConnectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
         private SqlDataAdapter _adapter;
         private DataSet _dataSet;
         public admin()

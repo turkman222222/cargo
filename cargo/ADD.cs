@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class ADD : Form
     {
-        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на свои параметры подключения
+        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на свои параметры подключения
 
         public ADD()
         {
@@ -138,7 +138,9 @@ namespace cargo
             }
         }
 
-        private void buttonAdd_Click(object sender, EventArgs e)
+       
+
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -147,12 +149,13 @@ namespace cargo
                     connection.Open();
                     using (SqlCommand command = new SqlCommand("INSERT INTO drop_table (catecoria, name_2, ed_izm, col_sk, cost, post_id) VALUES (@catecoria, @name_2, @ed_izm, @col_sk, @cost, @post_id)", connection))
                     {
-                        command.Parameters.AddWithValue("@catecoria", comboBox1.SelectedValue);
+                        command.Parameters.AddWithValue("@catecoria", comboBox1.SelectedIndex + 1);
                         command.Parameters.AddWithValue("@name_2", textBox2.Text);
-                        command.Parameters.AddWithValue("@ed_izm", comboBox2.SelectedValue);
+                        command.Parameters.AddWithValue("@ed_izm", comboBox2.SelectedIndex + 1);
                         command.Parameters.AddWithValue("@col_sk", int.Parse(textBox4.Text));
                         command.Parameters.AddWithValue("@cost", float.Parse(textBox5.Text));
-                        command.Parameters.AddWithValue("@post_id", comboBox3.SelectedValue);
+                        command.Parameters.AddWithValue("@post_id", comboBox3.SelectedIndex + 1);
+                        command.Parameters.AddWithValue("@id", Convert.ToInt32(dataGridView1.SelectedRows[0].Cells[0].Value));
 
                         command.ExecuteNonQuery();
                     }
@@ -168,51 +171,16 @@ namespace cargo
             {
                 MessageBox.Show("Произошла ошибка: " + ex.Message);
             }
+
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void ADD_Load(object sender, EventArgs e)
         {
-           
-                try
-                {
-                    if (dataGridView1.SelectedRows.Count == 0)
-                    {
-                        MessageBox.Show("Пожалуйста, выберите товар для обновления.");
-                        return;
-                    }
 
-                    using (SqlConnection connection = new SqlConnection(connectionString))
-                    {
-                        connection.Open();
-                        using (SqlCommand command = new SqlCommand("UPDATE drop_table SET catecoria = @catecoria, name_2 = @name_2, ed_izm = @ed_izm, col_sk = @col_sk, cost = @cost, post_id = @post_id WHERE id = @id;", connection))
-                        {
-                        command.Parameters.AddWithValue("@catecoria", comboBox1.SelectedIndex + 1);
-                        command.Parameters.AddWithValue("@name_2", textBox2.Text);
-                        command.Parameters.AddWithValue("@ed_izm", comboBox2.SelectedIndex + 1);
-                        command.Parameters.AddWithValue("@col_sk", int.Parse(textBox4.Text));
-                        command.Parameters.AddWithValue("@cost", float.Parse(textBox5.Text));
-                        command.Parameters.AddWithValue("@post_id", comboBox3.SelectedIndex + 1);
-                        command.Parameters.AddWithValue("@id", Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["id"].Value));
+        }
 
-                            command.ExecuteNonQuery();
-                        }
-                    }
-                    LoadProducts(); // Обновляем данные в DataGridView после сохранения
-                    MessageBox.Show("Запись успешно обновлена!");
-                }
-                catch (SqlException sqlEx)
-                {
-                    MessageBox.Show("Ошибка базы данных: " + sqlEx.Message);
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Пожалуйста, проверьте вводимые данные.");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Произошла ошибка: " + ex.Message);
-                }
-            
+        private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }

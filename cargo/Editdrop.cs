@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class Editdrop : Form
     {
-        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на свои параметры подключения
+        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на свои параметры подключения
 
         public Editdrop()
         {
@@ -283,6 +283,11 @@ namespace cargo
             {
                 MessageBox.Show("Ошибка обновления поста: " + ex.Message);
             }
+        }
+
+        private void Editdrop_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -105,7 +105,6 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(100, 20);
             this.textBox5.TabIndex = 20;
-           
             // 
             // textBox4
             // 
@@ -113,7 +112,6 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(100, 20);
             this.textBox4.TabIndex = 19;
-            
             // 
             // comboBox1
             // 
@@ -130,7 +128,6 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 17;
-            
             // 
             // comboBox2
             // 
@@ -190,6 +187,7 @@
             this.Controls.Add(this.textBox2);
             this.Name = "Editdrop";
             this.Text = "Editdrop";
+            this.Load += new System.EventHandler(this.Editdrop_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
