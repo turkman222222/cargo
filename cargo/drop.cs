@@ -66,60 +66,8 @@ namespace cargo
 
         private void add_Click(object sender, EventArgs e)
         {
-            // Валидация ввода
-            if (string.IsNullOrEmpty(textBox1.Text) || // catecoria
-                string.IsNullOrEmpty(textBox2.Text) || // name_2
-                string.IsNullOrEmpty(textBox3.Text) || // ed_izm
-                string.IsNullOrEmpty(textBox4.Text) || // col_sk
-                string.IsNullOrEmpty(textBox5.Text) || // cost
-                string.IsNullOrEmpty(textBox6.Text))   // post_id
-            {
-                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка");
-                return;
-            }
-
-            // Преобразование входных данных в правильные типы данных
-            if (!int.TryParse(textBox1.Text, out int catecoria) ||
-                !int.TryParse(textBox3.Text, out int ed_izm) ||
-                !int.TryParse(textBox4.Text, out int col_sk) ||
-                !decimal.TryParse(textBox5.Text, out decimal cost) ||
-                !int.TryParse(textBox6.Text, out int post_id)) // post_id
-            {
-                MessageBox.Show("Неверный формат данных. Проверьте введенные значения.", "Ошибка");
-                return;
-            }
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string query = "INSERT INTO dbo.drop_table (catecoria, name_2, ed_izm, col_sk, cost, post_id) VALUES (@catecoria, @name_2, @ed_izm, @col_sk, @cost, @post_id); SELECT SCOPE_IDENTITY();";
-
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        command.Parameters.AddWithValue("@catecoria", catecoria);
-                        command.Parameters.AddWithValue("@name_2", textBox2.Text); // name_2 - строка
-                        command.Parameters.AddWithValue("@ed_izm", ed_izm);
-                        command.Parameters.AddWithValue("@col_sk", col_sk);
-                        command.Parameters.AddWithValue("@cost", cost);
-                        command.Parameters.AddWithValue("@post_id", post_id);
-
-                        int newId = Convert.ToInt32(command.ExecuteScalar()); // Получение нового ID
-                        MessageBox.Show($"Товар добавлен с ID: {newId}.", "Успех");
-                        LoadProducts();
-                        ClearTextBoxes(); // Очистка полей ввода
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show($"Ошибка SQL: {ex.Message}", "Ошибка");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Непредвиденная ошибка: {ex.Message}", "Ошибка");
-                }
-            }
+            ADD aDD = new ADD();
+            aDD.Show();
         }
 
         private void edit_Click(object sender, EventArgs e)

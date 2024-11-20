@@ -13,13 +13,14 @@ namespace cargo
         {
             InitializeComponent();
             LoadUsers();
+            LoadRoles(); // Загружаем роли при инициализации формы
         }
 
         private void LoadUsers()
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT id_polzov, name, log, password, rol_id, mail FROM dbo.polzov;";
+                string query = "SELECT \r\n    p.id_polzov, \r\n    p.name, \r\n    p.log, \r\n    p.password, \r\n    p.mail,\r\n    r.name AS rol_id  -- Get the role name from the ROL table\r\nFROM \r\n    dbo.polzov p  -- Alias 'p' for brevity\r\nINNER JOIN \r\n    dbo.ROL r ON p.rol_id = rol_id;";
 
                 try
                 {
@@ -30,7 +31,7 @@ namespace cargo
                         adapter.Fill(dt);
                         dataGridView1.DataSource = dt;
 
-                        // Set column headers to Russian
+                        // Установка заголовков столбцов на русский
                         dataGridView1.Columns["id_polzov"].HeaderText = "ID";
                         dataGridView1.Columns["name"].HeaderText = "Имя";
                         dataGridView1.Columns["log"].HeaderText = "Логин";
@@ -38,8 +39,37 @@ namespace cargo
                         dataGridView1.Columns["rol_id"].HeaderText = "Роль";
                         dataGridView1.Columns["mail"].HeaderText = "Email";
 
-                        // Make 'id_polzov' column read-only
+                        // Сделать столбец 'id_polzov' только для чтения
                         dataGridView1.Columns["id_polzov"].ReadOnly = true;
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    MessageBox.Show($"Ошибка SQL: {ex.Message}", "Ошибка");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Непредвиденная ошибка: {ex.Message}", "Ошибка");
+                }
+            }
+        }
+
+        private void LoadRoles()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "SELECT id, name FROM dbo.ROL;";
+
+                try
+                {
+                    connection.Open();
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(query, connection))
+                    {
+                        DataTable dt = new DataTable();
+                        adapter.Fill(dt);
+                        comboBox1.DataSource = dt;
+                        comboBox1.DisplayMember = "name"; // Отображаемое значение
+                        comboBox1.ValueMember = "id"; // Значение, которое будет использоваться
                     }
                 }
                 catch (SqlException ex)
@@ -55,23 +85,17 @@ namespace cargo
 
         private void add_Click(object sender, EventArgs e)
         {
-            // Validate input
+            // Проверка на заполненность полей
             if (string.IsNullOrEmpty(textBox1.Text) ||
                 string.IsNullOrEmpty(textBox2.Text) ||
                 string.IsNullOrEmpty(textBox3.Text) ||
-                string.IsNullOrEmpty(textBox4.Text) ||
                 string.IsNullOrEmpty(textBox5.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка");
                 return;
             }
 
-            int rol_id;
-            if (!int.TryParse(textBox4.Text, out rol_id))
-            {
-                MessageBox.Show("Неверный формат для роли. Введите целое число.", "Ошибка");
-                return;
-            }
+            int rol_id = (int)comboBox1.SelectedValue; // Получаем значение из ComboBox
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -113,11 +137,10 @@ namespace cargo
                 return;
             }
 
-            // Validate input
+            // Проверка на заполненность полей
             if (string.IsNullOrEmpty(textBox1.Text) ||
                 string.IsNullOrEmpty(textBox2.Text) ||
                 string.IsNullOrEmpty(textBox3.Text) ||
-                string.IsNullOrEmpty(textBox4.Text) ||
                 string.IsNullOrEmpty(textBox5.Text))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка");
@@ -125,12 +148,7 @@ namespace cargo
             }
 
             int id_polzov = (int)dataGridView1.SelectedRows[0].Cells["id_polzov"].Value;
-            int rol_id;
-            if (!int.TryParse(textBox4.Text, out rol_id))
-            {
-                MessageBox.Show("Неверный формат для роли. Введите целое число.", "Ошибка");
-                return;
-            }
+            int rol_id = (int)comboBox1.SelectedValue; // Получаем значение из ComboBox
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -207,18 +225,8 @@ namespace cargo
             textBox1.Clear();
             textBox2.Clear();
             textBox3.Clear();
-            textBox4.Clear();
             textBox5.Clear();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
+            comboBox1.SelectedIndex = -1; // Сбрасываем выбор в ComboBox
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -228,8 +236,10 @@ namespace cargo
                 textBox1.Text = dataGridView1.SelectedRows[0].Cells["name"].Value.ToString();
                 textBox2.Text = dataGridView1.SelectedRows[0].Cells["log"].Value.ToString();
                 textBox3.Text = dataGridView1.SelectedRows[0].Cells["password"].Value.ToString();
-                textBox4.Text = dataGridView1.SelectedRows[0].Cells["rol_id"].Value.ToString();
                 textBox5.Text = dataGridView1.SelectedRows[0].Cells["mail"].Value.ToString();
+
+                // Устанавливаем выбранную роль в ComboBox
+                comboBox1.SelectedValue = dataGridView1.SelectedRows[0].Cells["rol_id"].Value;
             }
         }
 
@@ -237,10 +247,6 @@ namespace cargo
         {
 
         }
-
-        private void pol_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
+
