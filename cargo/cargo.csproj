@@ -109,6 +109,12 @@
     <Compile Include="drop.Designer.cs">
       <DependentUpon>drop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editdrop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editdrop.Designer.cs">
+      <DependentUpon>Editdrop.cs</DependentUpon>
+    </Compile>
     <Compile Include="editpage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="drop.resx">
       <DependentUpon>drop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editdrop.resx">
+      <DependentUpon>Editdrop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="editpage.resx">
       <DependentUpon>editpage.cs</DependentUpon>

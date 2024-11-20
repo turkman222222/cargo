@@ -112,6 +112,7 @@
             this.Controls.Add(this.comboBoxCategories);
             this.Name = "sd_zakaz";
             this.Text = "Заказать";
+            this.Load += new System.EventHandler(this.sd_zakaz_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownQuantity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

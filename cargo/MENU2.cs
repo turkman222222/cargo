@@ -19,7 +19,7 @@ namespace cargo
         // Метод для загрузки заказов пользователя
         private void LoadUserOrders()
         {
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=""111111111111 (1)"";Integrated Security=True";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -53,6 +53,11 @@ namespace cargo
         {
             sd_zakaz orderForm = new sd_zakaz(userId); // Передаем userId в конструктор
             orderForm.Show();
+        }
+
+        private void MENU2_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

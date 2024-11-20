@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class post : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
 
         public post()
         {

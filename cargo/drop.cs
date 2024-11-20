@@ -8,7 +8,7 @@ namespace cargo
 {
     public partial class drop : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
 
         public drop()
         {
@@ -124,74 +124,13 @@ namespace cargo
 
         private void edit_Click(object sender, EventArgs e)
         {
-            // Проверка, что id был задан
-            if (
-                string.IsNullOrEmpty(textBox1.Text) || // catecoria
-                string.IsNullOrEmpty(textBox2.Text) || // name_2
-                string.IsNullOrEmpty(textBox3.Text) || // ed_izm
-                string.IsNullOrEmpty(textBox4.Text) || // col_sk
-                string.IsNullOrEmpty(textBox5.Text) || // cost
-                string.IsNullOrEmpty(textBox6.Text))   // post_id
-            {
-                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка");
-                return;
-            }
+            Editdrop gg = new Editdrop();
+            gg.Show();
 
-            // Преобразование входных данных в правильные типы данных
-            if (
-                !int.TryParse(textBox1.Text, out int catecoria) ||
-                !int.TryParse(textBox3.Text, out int ed_izm) ||
-                !int.TryParse(textBox4.Text, out int col_sk) ||
-                !decimal.TryParse(textBox5.Text, out decimal cost) ||
-                !int.TryParse(textBox6.Text, out int post_id)) // post_id
-            {
-                MessageBox.Show("Неверный формат данных. Проверьте введенные значения.", "Ошибка");
-                return;
-            }
+            
+            
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                // Объявляем переменную @id в SQL
-                string query = @"
-                    DECLARE @id INT = @inputId; 
-                    UPDATE dbo.drop_table 
-                    SET catecoria = @catecoria, name_2 = @name_2, ed_izm = @ed_izm, col_sk = @col_sk, cost = @cost, post_id = @post_id 
-                    WHERE id = @id;";
-
-                try
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    { 
-                        command.Parameters.AddWithValue("@catecoria", catecoria);
-                        command.Parameters.AddWithValue("@name_2", textBox2.Text); // name_2 - строка
-                        command.Parameters.AddWithValue("@ed_izm", ed_izm);
-                        command.Parameters.AddWithValue("@col_sk", col_sk);
-                        command.Parameters.AddWithValue("@cost", cost);
-                        command.Parameters.AddWithValue("@post_id", post_id);
-
-                        int rowsAffected = command.ExecuteNonQuery(); // Выполнение обновления
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Запись успешно обновлена.", "Успех");
-                            LoadProducts(); // Обновление списка продуктов
-                            ClearTextBoxes(); // Очистка полей ввода
-                        }
-                        else
-                        {
-                            MessageBox.Show("Запись не найдена.", "Ошибка");
-                        }
-                    }
-                }
-                catch (SqlException ex)
-                {
-                    MessageBox.Show($"Ошибка SQL: {ex.Message}", "Ошибка");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Непредвиденная ошибка: {ex.Message}", "Ошибка");
-                }
-            }
+            
         }
 
         private void delete_Click(object sender, EventArgs e)
@@ -274,6 +213,51 @@ namespace cargo
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void drop_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

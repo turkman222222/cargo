@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class admin : Form
     {
-        string ConnectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False;";
+        string ConnectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
         private SqlDataAdapter _adapter;
         private DataSet _dataSet;
         public admin()
@@ -120,6 +120,11 @@ namespace cargo
         {
             pol pol = new pol();
             pol.Show();
+        }
+
+        private void admin_Load_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

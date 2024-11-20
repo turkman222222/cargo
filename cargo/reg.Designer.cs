@@ -204,6 +204,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "reg";
             this.Text = "Регистрация";
+            this.Load += new System.EventHandler(this.reg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

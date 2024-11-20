@@ -62,6 +62,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 1;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 
@@ -69,6 +70,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 20);
             this.textBox2.TabIndex = 2;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox3
             // 
@@ -76,6 +78,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(100, 20);
             this.textBox3.TabIndex = 3;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -99,6 +102,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(100, 20);
             this.textBox6.TabIndex = 6;
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // add
             // 
@@ -138,6 +142,7 @@
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 10;
             this.label1.Text = "Категория";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -157,6 +162,7 @@
             this.label3.Size = new System.Drawing.Size(66, 13);
             this.label3.TabIndex = 12;
             this.label3.Text = "Количество";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
@@ -176,6 +182,7 @@
             this.label5.Size = new System.Drawing.Size(33, 13);
             this.label5.TabIndex = 14;
             this.label5.Text = "Цена";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // label6
             // 
@@ -185,6 +192,7 @@
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 15;
             this.label6.Text = "Поставщик";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
             // drop
             // 
@@ -209,6 +217,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "drop";
             this.Text = "Товары";
+            this.Load += new System.EventHandler(this.drop_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

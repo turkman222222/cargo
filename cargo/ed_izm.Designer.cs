@@ -105,6 +105,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "ed_izm";
             this.Text = "единицы измерения";
+            this.Load += new System.EventHandler(this.ed_izm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

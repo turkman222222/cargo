@@ -19,7 +19,7 @@ namespace cargo
         }
         private void LoadData()
         {
-            string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
             string query = @"SELECT 
     k.name AS [Название категории],
     dt.name_2 AS [Название товара],
@@ -54,7 +54,7 @@ ORDER BY
         }
         private void LoadTotalStockValue()
         {
-            string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True";
             string query = @"SELECT 
         ISNULL(SUM(CASE WHEN wo.OperationType = 'Приход' THEN wo.Quantity * dt.cost ELSE -wo.Quantity * dt.cost END), 0) AS [Общая_стоимость_товаров]
     FROM 

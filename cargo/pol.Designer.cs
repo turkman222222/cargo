@@ -185,6 +185,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "pol";
             this.Text = "Пользователи";
+            this.Load += new System.EventHandler(this.pol_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

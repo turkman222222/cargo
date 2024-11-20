@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class category : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Replace with your connection string
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Replace with your connection string
 
         public category()
         {

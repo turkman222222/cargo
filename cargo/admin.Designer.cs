@@ -111,6 +111,7 @@
             this.Controls.Add(this.dataGridView2);
             this.Name = "admin";
             this.Text = "Панель управления";
+            this.Load += new System.EventHandler(this.admin_Load_1);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
 

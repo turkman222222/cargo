@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class ed_izm : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
 
         public ed_izm()
         {
@@ -175,6 +175,11 @@ namespace cargo
             {
                 textBox1.Text = dataGridView1.SelectedRows[0].Cells["ed_iz"].Value.ToString();
             }
+        }
+
+        private void ed_izm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

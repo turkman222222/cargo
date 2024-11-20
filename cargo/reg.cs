@@ -21,7 +21,7 @@ namespace cargo
         public reg()
         {
             InitializeComponent();
-            string connectionString = @"Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False";
+            string connectionString = @"Data Source=(localdb)\mssqllocaldb;Initial Catalog=""111111111111 (1)"";Integrated Security=True";
             SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
             if (connection.State == System.Data.ConnectionState.Open)
@@ -66,6 +66,11 @@ namespace cargo
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void reg_Load(object sender, EventArgs e)
         {
 
         }

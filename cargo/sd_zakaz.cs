@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class sd_zakaz : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
         private int userId; // Идентификатор текущего пользователя
 
         public sd_zakaz(int userId)
@@ -205,6 +205,11 @@ namespace cargo
         private void labelTotalCost_Click(object sender, EventArgs e)
         {
             // Этот метод можно оставить пустым или удалить, если не используется
+        }
+
+        private void sd_zakaz_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

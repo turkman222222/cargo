@@ -7,7 +7,7 @@ namespace cargo
 {
     public partial class pol : Form
     {
-        private string connectionString = "Data Source=NEGGER;Initial Catalog=10241367;Integrated Security=True;Encrypt=False"; // Замените на вашу строку подключения
+        private string connectionString = "Data Source=(localdb)\\mssqllocaldb;Initial Catalog=\"111111111111 (1)\";Integrated Security=True"; // Замените на вашу строку подключения
 
         public pol()
         {
@@ -234,6 +234,11 @@ namespace cargo
         }
 
         private void dataGridView1_CellContentClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void pol_Load(object sender, EventArgs e)
         {
 
         }
